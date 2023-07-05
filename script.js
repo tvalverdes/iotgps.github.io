@@ -59,7 +59,7 @@ L.control
 }
 
 window.onload = getData;
-setInterval(getData, 4000);
+setInterval(getData, 8000);
 
    
 ;
