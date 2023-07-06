@@ -26,39 +26,47 @@ const db = getDatabase();
 
 function getData() {
   const dbRef = ref(db);
-  get(child(dbRef, "gps")).
-  then((snapshot)=>{
-    if (map!=undefined) {
+  get(child(dbRef, "gps")).then((snapshot) => {
+    
+
+    let coordenadas = JSON.parse(JSON.stringify(snapshot));
+    const nuevaLatitud = coordenadas.latitude;
+    const nuevaLongitud = coordenadas.longitude;
+
+    if (nuevaLatitud === latitud && nuevaLongitud === longitud) {
+      console.log("Las coordenadas no han cambiado");
+      return;
+    }
+    if (map != undefined) {
       map.remove();
     }
-    
-    let coordenadas = JSON.parse(JSON.stringify(snapshot));
-    latitud = coordenadas.latitude;
-    longitud = coordenadas.longitude;
+
+    latitud = nuevaLatitud;
+    longitud = nuevaLongitud;
     inputLatitud.placeholder = latitud;
     inputLongitud.placeholder = longitud;
     console.log(latitud);
     console.log(longitud);
-    //console.log(coordenadas.latitude);
-    //console.log(coordenadas.longitude);
+
     map = L.map("map", { zoomControl: false }).setView([latitud, longitud], 16);
 
-L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 
-marker = L.marker([latitud, longitud])
-  .addTo(map)
-L.control
-  .zoom({
-    position: "bottomright",
-    setZoom: 20,
-  })
-  .addTo(map);
+    marker = L.marker([latitud, longitud]).addTo(map);
+
+    L.control
+      .zoom({
+        position: "bottomright",
+        setZoom: 20,
+      })
+      .addTo(map);
+
     map.setView([latitud, longitud], 16);
-    
+
     map.removeLayer(marker);
     marker = L.marker([latitud, longitud]).addTo(map);
     map.invalidateSize();
-  })
+  });
 }
 
 window.onload = getData;
