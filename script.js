@@ -4,6 +4,8 @@ let longitud //= -79.0404438275922;
 let marker;
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 let map;
+let inputLatitud = document.getElementById("latitud");
+let inputLongitud = document.getElementById("longitud");
 
 const firebaseConfig = {
   apiKey: "AIzaSyD5XfmpeLm_e9EfxbsmfGDmWIiPKybojrs",
@@ -33,7 +35,8 @@ function getData() {
     let coordenadas = JSON.parse(JSON.stringify(snapshot));
     latitud = coordenadas.latitude;
     longitud = coordenadas.longitude;
-
+    inputLatitud.value = latitud;
+    inputLongitud.value = longitud;
     console.log(latitud);
     console.log(longitud);
     //console.log(coordenadas.latitude);
