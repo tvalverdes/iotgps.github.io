@@ -35,8 +35,8 @@ function getData() {
     let coordenadas = JSON.parse(JSON.stringify(snapshot));
     latitud = coordenadas.latitude;
     longitud = coordenadas.longitude;
-    inputLatitud.value = latitud;
-    inputLongitud.value = longitud;
+    inputLatitud.innerHTML = latitud;
+    inputLongitud.innerHTML = longitud;
     console.log(latitud);
     console.log(longitud);
     //console.log(coordenadas.latitude);
